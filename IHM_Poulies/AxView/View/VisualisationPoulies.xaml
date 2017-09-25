@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="AxView.View.VisualisationPoulies"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:conv="clr-namespace:AxView.Converters"
+             xmlns:my="clr-namespace:AxView.Resources.Elements"
+             xmlns:res="clr-namespace:AxLanguage;assembly=AxLanguage"
+             xmlns:oxy="http://oxyplot.codeplex.com"
+             mc:Ignorable="d" 
+             MinWidth="1228" MinHeight="550">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.927*"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+
+        <!--Grid des infos et choix-->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="0">
+                <TextBlock Text="{Binding ExoPoulies.Description}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1">
+                <WrapPanel Margin="-20,50">
+                    <RadioButton Name="vs" Margin="50,0,25,0" Height="100"  Width="100" GroupName="Symetrie" IsChecked="{Binding SymetrieVS}" FontFamily="Arial" FontSize="21.333" Style="{DynamicResource ToggleButtonStyle}">
+                        <StackPanel>
+                            <Label Content="VS" />
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Name="jss" Margin="0,0,15,0" Height="100"  Width="100" GroupName="Symetrie" IsChecked="{Binding SymetrieJSS}" FontFamily="Arial" FontSize="21.333" Style="{DynamicResource ToggleButtonStyle}">
+                        <StackPanel>
+                            <Label Content="JSS" />
+                        </StackPanel>
+                    </RadioButton>
+                    <CheckBox Name="dephasage" Height="100"  Width="100" IsChecked="{Binding Dephasage}" FontFamily="Arial" FontSize="21.333" Style="{DynamicResource ToggleButtonStyle}">
+                        <StackPanel>
+                            <Label Content="90°" />
+                        </StackPanel>
+                    </CheckBox>
+                </WrapPanel>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2">
+                <StackPanel >
+                    <Button Command="{Binding DataContext.EnvoyerComCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Content="{x:Static res:Languages.REAplan_Demarrage}" FontSize="20" Height="85" Width="300" Margin="0,30,0,10" Style="{DynamicResource ButtonBackgroundStyle}" Background="#FF659F5D" />
+                    <Button Command="{Binding DataContext.StopNVComCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Content="{x:Static res:Languages.REAplan_Stop}" FontSize="20" Height="85" Width="300" Style="{DynamicResource ButtonBackgroundStyle}" Background="#FFDC5252" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Grid des graphs instant -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="0">
+                <oxy:PlotView Name="Plot_Vitesse_Instant" Model="{Binding PlotModelVitesseInstant}" Grid.Row="0"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1">
+                <oxy:PlotView Name="Plot_Angle_Instant" Model="{Binding PlotModelAngleInstant}" Grid.Row="1"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2">
+                <oxy:PlotView Name="Plot_Sat_Instant" Model="{Binding PlotModelSatInstant}" Grid.Row="1"/>
+            </Border>
+        </Grid>
+        <!--Grid des graphs moyen-->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="0">
+                <oxy:PlotView Name="Plot_Vitesse_Moyenne" Model="{Binding PlotModelVitesseMoyenne}" Grid.Row="0"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1">
+                <oxy:PlotView Name="Plot_Angle_Moyen" Model="{Binding PlotModelAngleMoyen}" Grid.Row="1"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2">
+                <oxy:PlotView Name="Plot_Sat_Moyen" Model="{Binding PlotModelSatMoyen}" Grid.Row="1"/>
+            </Border>
+        </Grid>
+
+        <!-- Bouttons de navigation -->
+        <Border BorderBrush="Black" BorderThickness="0,1,0,0" Grid.ColumnSpan="3" Grid.Row="1">
+            <StackPanel Orientation="Horizontal" d:LayoutOverrides="Height" Margin="0" HorizontalAlignment="Right">
+                <Button Content="{x:Static res:Languages.REAplan_Precedent}" FontSize="20" Margin="10,0" Height="50" Width="150" Padding="0" Command="{Binding PreviousViewModelCommand}"/>
+                <Button Content="{x:Static res:Languages.REAplan_Suivant}" Command="{Binding NextViewModelCommand}" IsEnabled="false" FontSize="20" Margin="10,0" Height="50" Width="150" Padding="0" />
+                <Button Content="{x:Static res:Languages.REAplan_Accueil}" FontSize="20" Margin="10,0" Height="50" Width="150" Padding="0"  Command="{Binding MainViewModelCommand}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

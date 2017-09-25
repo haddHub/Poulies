@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="AxView.View.EvaluationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:res="clr-namespace:AxLanguage;assembly=AxLanguage"
+             xmlns:conv="clr-namespace:AxView.Converters"
+             mc:Ignorable="d" 
+             MinWidth="1228" MinHeight="550">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.927*"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" Grid.RowSpan="2" Opacity="0.15"/>
+        <Border BorderBrush="Black" BorderThickness="0">
+            <Border.Background>
+                <ImageBrush/>
+            </Border.Background>
+            <StackPanel Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <RadioButton Content="Crazy Ascent" Command="{Binding ChangeInternNavigation}" CommandParameter="0" Height="80" Margin="43.666,10" Width="300" GroupName="TypeExercice" IsChecked="{Binding TypeCinematique}" FontFamily="Arial" FontSize="21.333" Background="White" Style="{DynamicResource ToggleButtonStyle}" DataContext="{Binding}" />
+            </StackPanel>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1,0" Grid.Column="1">
+            <ContentPresenter Content="{Binding Path=InternView}" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="0" Grid.Column="2">
+            <ContentPresenter Content="{Binding InternViewThemes}" Margin="10"/>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="0,1,0,0" Grid.ColumnSpan="3" Grid.Row="1">
+            <StackPanel Orientation="Horizontal" d:LayoutOverrides="Height" Margin="0" HorizontalAlignment="Right">
+                <Button Content="{x:Static res:Languages.REAplan_Precedent}" FontSize="20" Margin="10,0" Height="50" Width="150" Padding="0" Command="{Binding PreviousViewModelCommand}"/>
+                <Button Content="{x:Static res:Languages.REAplan_Suivant}" Command="{Binding NextViewModelCommand}" IsEnabled="{Binding InternView.CanUseNext}" FontSize="20" Margin="10,0" Height="50" Width="150" Padding="0" />
+                <Button Content="{x:Static res:Languages.REAplan_Accueil}" FontSize="20" Margin="10,0" Height="50" Width="150" Padding="0"  Command="{Binding MainViewModelCommand}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
